@@ -24,7 +24,6 @@
 axios
     .get('https://lambda-times-api.herokuapp.com/articles')
     .then(res => {
-        console.log(res);
         let cardContainer = document.querySelector('.cards-container');
         Object.keys(res.data.articles).forEach(topic => {
             res.data.articles[topic].forEach(article => {
