@@ -27,7 +27,7 @@ axios
         let cardContainer = document.querySelector('.cards-container');
         Object.keys(res.data.articles).forEach(topic => {
             res.data.articles[topic].forEach(article => {
-                cardContainer.appendChild(createCard(article));
+                cardContainer.appendChild(createCard(topic, article));
             });
         });
     })
@@ -35,7 +35,7 @@ axios
         console.log(`Error: ${err}`);
     });
 
-function createCard(article) {
+function createCard(topic, article) {
     let card = document.createElement('div');
     let headline = document.createElement('div');
     let author = document.createElement('div');
@@ -43,7 +43,7 @@ function createCard(article) {
     let image = document.createElement('img');
     let credit = document.createElement('span');
 
-    card.classList.add('card');
+    card.classList.add('card', `${topic.replace(/\./g, '')}-article`);
     headline.classList.add('headline');
     author.classList.add('author');
     imgContainer.classList.add('img-container');

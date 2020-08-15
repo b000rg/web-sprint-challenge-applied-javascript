@@ -13,6 +13,7 @@
 axios
     .get('https://lambda-times-api.herokuapp.com/topics')
     .then(res => {
+        createAllTab();
         res.data.topics.forEach(tabLabel => {
             createTab(tabLabel);
         });
@@ -25,6 +26,30 @@ function createTab(tabLabel) {
     let tab = document.createElement('div');
     tab.classList.add('tab');
     tab.innerText = tabLabel;
+
+    tabLabel = tabLabel.replace(/\..*/, '');
+    tab.addEventListener('click', event => {
+        document.querySelectorAll(`.card:not(.${tabLabel}-article)`).forEach(el => {
+            if (! el.matches('.card--hidden')) el.classList.add('card--hidden');
+        });
+        document.querySelectorAll(`.card.${tabLabel}-article`).forEach(el => {
+            if (el.matches('.card--hidden')) el.classList.remove('card--hidden');
+        });
+    });
+
+    document.querySelector('.topics').appendChild(tab);
+};
+
+function createAllTab() {
+    let tab = document.createElement('div');
+    tab.classList.add('tab');
+    tab.innerText = 'all';
+
+    tab.addEventListener('click', event => {
+        document.querySelectorAll('.card').forEach(el => {
+            if (el.matches('.card--hidden')) el.classList.remove('card--hidden');
+        });
+    });
 
     document.querySelector('.topics').appendChild(tab);
 };
